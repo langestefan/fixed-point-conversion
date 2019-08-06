@@ -19,10 +19,10 @@ int   passed = 0;
 
 #ifdef RUN_FLOAT
 
-typedef   float  fixed;     //note that still one testcase fails because float is not accurate enough!
+typedef   float  fixed; //note that still one testcase fails because float is not accurate enough!
 //typedef   double  fixed;  //more precision floatint point type passes all tests
 
-#define float_to_fixed(a)   (a)   //float does not need conversion
+#define float_to_fixed(a)   (a) //float does not need conversion
 
 fixed calc_average( fixed* array, int8_t lenght) {
   int8_t hour;
@@ -30,12 +30,12 @@ fixed calc_average( fixed* array, int8_t lenght) {
   for ( hour=0; hour<lenght; hour++) {
     sum += *array++;
   }
-  return sum / lenght;   //float does not need rounding
+  return sum / lenght; //float does not need rounding
 }
 
 void to_string( fixed number )
 {
-  sprintf(buffer, "%.1f", number);  //printing takes care of rounding
+  sprintf(buffer, "%.1f", number); //printing takes care of rounding
 }
 
 #else
@@ -43,16 +43,16 @@ void to_string( fixed number )
 // Q7.8 = 1 bit sign, 7 bit integer value, 8 bit fractional part
 typedef   int16_t  fixed;   
 
-#define SHIFT_AMOUNT 					(8)																			// 8 bit shift
-#define SHIFT_MASK 						((1 << SHIFT_AMOUNT) - 1)								// 0000 0000 . 1111 1111 = 255
+#define SHIFT_AMOUNT (8) // 8 bit shift
+#define SHIFT_MASK ((1 << SHIFT_AMOUNT) - 1) // 0000 0000 . 1111 1111 = 255
 
 // make the correct conversion macro
-#define float_to_fixed(a)     ((fixed)((a) * (1 << SHIFT_AMOUNT))) 		// Multiply with 256
+#define float_to_fixed(a) ((fixed)((a) * (1 << SHIFT_AMOUNT))) // Multiply with 256
 	
-#define frac_part(a)					((a) & SHIFT_MASK) 											// Retrieve fractional part of fixed point number
-#define frac_fixed(a) 	      (frac_part(a) * 10)											// Multiply integer value fractional part by 10 to not lose it after reverting back to int
-#define frac_rounded(a)	      (frac_fixed(a) + float_to_fixed(0.6)) 	// Add 0.6(fixed notation) to fixed point fractional part
-#define frac_real(a)					(frac_rounded(a) / (1 << SHIFT_AMOUNT))	// Divide by 256 to convert back to notation presentable in int
+#define frac_part(a) ((a) & SHIFT_MASK) // Retrieve fractional part of fixed point number
+#define frac_fixed(a) (frac_part(a) * 10) // Multiply integer value fractional part by 10 to not lose it after reverting back to int
+#define frac_rounded(a) (frac_fixed(a) + float_to_fixed(0.6)) // Add 0.6(fixed notation) to fixed point fractional part
+#define frac_real(a) (frac_rounded(a) / (1 << SHIFT_AMOUNT)) // Divide by 256 to convert back to notation presentable in int
 
 // implement this code yourself
 fixed calc_average( fixed* array, int8_t lenght) 
@@ -61,18 +61,18 @@ fixed calc_average( fixed* array, int8_t lenght)
 	int8_t hour;
   int32_t sum = 0;
 	
-  for ( hour=0; hour<lenght; hour++){ 					// Calculate every element of array
-    sum += *array++; 														// Dereference every array position to retrieve value
+  for ( hour=0; hour<lenght; hour++){ // Calculate every element of array
+    sum += *array++; // Dereference every array position to retrieve value
   }
-  return sum / lenght; 													// Calculate average
+  return sum / lenght; // Calculate average
 }
 
 // implement this code yourself
 void to_string( fixed number ) 
 {
 	sprintf(buffer, "%d.%1d",
-					(number / (1 << SHIFT_AMOUNT)), 			// Devide by 256 to retrieve real value (7 bits value, 1 bit sign = 8 bits)
-					frac_real(number)); 									// Use frac_real(a) macro to retrieve fractional part of number input (8 bit value + 8 bit fraction = 16 bits total)
+					(number / (1 << SHIFT_AMOUNT)), // Devide by 256 to retrieve real value (7 bits value, 1 bit sign = 8 bits)
+					frac_real(number)); // Use frac_real(a) macro to retrieve fractional part of number input (8 bit value + 8 bit fraction = 16 bits total)
 }
 
 #endif // RUN_FLOAT
@@ -146,7 +146,7 @@ void assert_strequal( int test, char* b, char* expected, char* message )
 {
 	USART_putstr( "TEST: " );
 	USART_putint( test+1 );
-	if ( strncmp( b, expected, 10 ) != 0 )   //check the first 10 digits for equality
+	if ( strncmp( b, expected, 10 ) != 0 ) //check the first 10 digits for equality
 	{
 		USART_putstr( " FAIL: " );
 		USART_putstr( b );
