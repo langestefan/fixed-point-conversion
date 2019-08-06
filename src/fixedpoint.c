@@ -1,6 +1,6 @@
 /******************************************************************************
  * File           : Main program
- * Author         : VNP02
+ * Author         : Stefan de Lange
  *****************************************************************************/
 //#include "stm32f0xx.h"
 #include <stdio.h>
@@ -39,8 +39,6 @@ void to_string( fixed number )
 }
 
 #else
-	
-//your fixed point arithmetic code goes here
 
 // Q7.8 = 1 bit sign, 7 bit integer value, 8 bit fractional part
 typedef   int16_t  fixed;   
@@ -63,7 +61,7 @@ fixed calc_average( fixed* array, int8_t lenght)
 	int8_t hour;
   int32_t sum = 0;
 	
-  for ( hour=0; hour<lenght; hour++){ 						// Calculate every element of array
+  for ( hour=0; hour<lenght; hour++){ 					// Calculate every element of array
     sum += *array++; 														// Dereference every array position to retrieve value
   }
   return sum / lenght; 													// Calculate average
