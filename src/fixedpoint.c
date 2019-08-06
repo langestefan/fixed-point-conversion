@@ -45,16 +45,16 @@ void to_string( fixed number )
 // Q7.8 = 1 bit sign, 7 bit integer value, 8 bit fractional part
 typedef   int16_t  fixed;   
 
-#define SHIFT_AMOUNT 					(8)										// 8 bit shift
-#define SHIFT_MASK 						((1 << SHIFT_AMOUNT) - 1)				// 0000 0000 . 1111 1111 = 255
+#define SHIFT_AMOUNT 					(8)																			// 8 bit shift
+#define SHIFT_MASK 						((1 << SHIFT_AMOUNT) - 1)								// 0000 0000 . 1111 1111 = 255
 
 // make the correct conversion macro
-#define float_to_fixed(a)     			((fixed)((a) * (1 << SHIFT_AMOUNT))) 	// Multiply with 256
+#define float_to_fixed(a)     ((fixed)((a) * (1 << SHIFT_AMOUNT))) 		// Multiply with 256
 	
-#define frac_part(a)					((a) & SHIFT_MASK) 						// Retrieve fractional part of fixed point number
-#define frac_fixed(a) 	      			(frac_part(a) * 10)						// Multiply integer value fractional part by 10 to not lose it after reverting back to int
-#define frac_rounded(a)	      			(frac_fixed(a) + float_to_fixed(0.6)) 	// Add 0.6(fixed notation) to fixed point fractional part
-#define frac_real(a)					(frac_rounded(a) / (1 << SHIFT_AMOUNT))	// Devide by 256 to convert back to notation presentable in int
+#define frac_part(a)					((a) & SHIFT_MASK) 											// Retrieve fractional part of fixed point number
+#define frac_fixed(a) 	      (frac_part(a) * 10)											// Multiply integer value fractional part by 10 to not lose it after reverting back to int
+#define frac_rounded(a)	      (frac_fixed(a) + float_to_fixed(0.6)) 	// Add 0.6(fixed notation) to fixed point fractional part
+#define frac_real(a)					(frac_rounded(a) / (1 << SHIFT_AMOUNT))	// Divide by 256 to convert back to notation presentable in int
 
 // implement this code yourself
 fixed calc_average( fixed* array, int8_t lenght) 
@@ -63,8 +63,7 @@ fixed calc_average( fixed* array, int8_t lenght)
 	int8_t hour;
   int32_t sum = 0;
 	
-  for ( hour=0; hour<lenght; hour++) 						// Calculate every element of array
-	{
+  for ( hour=0; hour<lenght; hour++){ 						// Calculate every element of array
     sum += *array++; 														// Dereference every array position to retrieve value
   }
   return sum / lenght; 													// Calculate average
@@ -111,15 +110,13 @@ int main(void)
   int test, j;
   fixed avg;
   fixed hourly_temperatures[ 24 ];
-
-  //USART_init();
-  //USART_clearscreen();
+	
 #ifdef RUN_FLOAT
   USART_putstr("This is testcode for floating point arithmetic\n");
 #else
-  //USART_putstr("This is testcode for fixed point arithmetic\n");
+  USART_putstr("This is testcode for fixed point arithmetic\n");
 #endif
-  //USART_putstr("The output of the testcases is\n\n");
+  USART_putstr("The output of the testcases is\n\n");
 
   for ( test=0; test<nrofTestcases; test++)
   {
@@ -142,7 +139,7 @@ int main(void)
   USART_putstr( " of the tests\n" );
   USART_putstr("Ready");
 
-  //ready
+  // Ready
   while(1);
 }
 
